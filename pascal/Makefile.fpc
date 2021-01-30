@@ -1,12 +1,12 @@
 FPC=fpc
-POPT=-XX -O2 -Ci-
+POPTS=-XX -O2 -Ci-
 SRC=hello.pas
 BIN=hello
 
 all: $(BIN)
 
 $(BIN): $(SRC)
-	$(FPC) $(POPT) -o$(BIN) $(SRC)
+	$(FPC) $(POPTS) -o$(BIN) $(SRC)
 
 clean:
 	rm -f $(BIN)
