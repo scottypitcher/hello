@@ -1,12 +1,12 @@
 CXX=wcl386
-CARGS=-zq -ox
+CFLAGS=-zq -ox
 SRC=hello.cpp
 BIN=hello.exe
 
 all: $(BIN)
 
 $(BIN): $(SRC)
-	$(CXX) $(CARGS) -fe=$(BIN) $(SRC)
+	$(CXX) $(CFLAGS) -fe=$(BIN) $(SRC)
 
 clean:
 	rm -f $(BIN)
