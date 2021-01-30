@@ -1,2 +1,2 @@
 # hello
-Various "Hello world" examples
+"Hello world" examples in various programming languages.
