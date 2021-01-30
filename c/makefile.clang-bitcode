@@ -1,7 +1,7 @@
 # Makefile for Clang to emit LLVM bitcode
 
 CC=clang
-CARGS=-W -Wall
+CFLAGS=-W -Wall
 SRC=hello.c
 BIN=hello
 BITCODE=hello.bc
@@ -9,10 +9,10 @@ BITCODE=hello.bc
 all: $(BIN)
 
 $(BIN): $(BITCODE)
-	$(CC) $(CARGS) -o $(BIN) $(BITCODE)
+	$(CC) $(CFLAGS) -o $(BIN) $(BITCODE)
 
 $(BITCODE): $(SRC)
-	$(CC) $(CARGS) -emit-llvm -c $(SRC)
+	$(CC) $(CFLAGS) -emit-llvm -c $(SRC)
 
 clean:
 	rm -f $(BIN) $(BITCODE)

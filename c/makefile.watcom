@@ -1,5 +1,5 @@
 CC=wcl386
-CARGS=-zq -ox
+CFLAGS=-zq -ox
 SRC=hello.c
 BIN=hello.exe
 
@@ -10,7 +10,7 @@ RM=del
 !endif
 
 $(BIN): $(SRC)
-	$(CC) $(CARGS) -fe=$(BIN) $(SRC)
+	$(CC) $(CFLAGS) -fe=$(BIN) $(SRC)
 
 all: $(BIN)
 
