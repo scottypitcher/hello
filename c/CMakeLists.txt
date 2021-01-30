@@ -1,0 +1,9 @@
+project (hello)
+
+CMAKE_MINIMUM_REQUIRED (VERSION 2.8.12)
+
+ADD_EXECUTABLE (hello
+    hello.c
+)
+
+INSTALL (TARGETS hello DESTINATION bin)
