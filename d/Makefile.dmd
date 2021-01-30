@@ -1,0 +1,15 @@
+# Makefile for Walter Bright's DMD D Compiler
+
+DMD=dmd
+DOPTS=-O
+LOPTS=-L=-s
+BIN=hello
+SRC=hello.d
+
+all: $(BIN)
+
+$(BIN): $(SRC)
+	$(DMD) $(DOPTS) -of=$(BIN) $(SRC) $(LOPTS)
+
+clean:
+	rm -f $(BIN) $(BIN).o

@@ -1,0 +1,15 @@
+# Makefile for the GNU D compiler
+
+GDC=gdc
+DOPTS=-O2
+LOPTS=-s
+BIN=hello
+SRC=hello.d
+
+all: $(BIN)
+
+$(BIN): $(SRC)
+	$(GDC) $(DOPTS) -o $(BIN) $(SRC) $(LOPTS)
+
+clean:
+	rm -f $(BIN)
