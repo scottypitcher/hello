@@ -1,0 +1,18 @@
+CC=wcl386
+CARGS=-zq -ox
+SRC=hello.c
+BIN=hello.exe
+
+!ifdef __UNIX__
+RM=rm -f
+!else
+RM=del
+!endif
+
+$(BIN): $(SRC)
+	$(CC) $(CARGS) -fe=$(BIN) $(SRC)
+
+all: $(BIN)
+
+clean:
+	$(RM) $(BIN)
