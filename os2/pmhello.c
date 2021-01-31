@@ -26,17 +26,21 @@ static void WindowPaint(HWND hwnd)
 {
     RECTL r;
     HPS hps;
+    char text[] = "Hello world.";
+    char text2[] = "Click anywhere inside the window to close it.";
 
     hps = WinBeginPaint(hwnd, 0, NULL);
     WinQueryWindowRect(hwnd, &r);
     WinFillRect(hps, &r, CLR_DARKBLUE);
     r.xLeft += TEXT_MARGIN;
     r.yTop -= TEXT_MARGIN;
-#if 0
-    WinDrawText(WinGetPS(hwnd), -1, "Hello world.", &r, CLR_WHITE, 0, DT_LEFT | DT_TOP | DT_ERASERECT | DT_TEXTATTRS);
-#else
-    WinDrawText(WinGetPS(hwnd), -1, "Hello world.", &r, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
-#endif
+
+    WinDrawText(WinGetPS(hwnd), -1, text, &r, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
+
+    r.yTop -= 60;
+
+    WinDrawText(WinGetPS(hwnd), -1, text2, &r, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
+
     WinEndPaint(hwnd);
 }
 
