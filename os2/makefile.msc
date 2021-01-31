@@ -3,7 +3,8 @@
 CC=cl
 CFLAGS=-Lp -F 4000
 COPT=-Ox -nologo
-LFLAGS=-link /pmtype:pm
+LFLAGS=-link /pmtype:vio
+LFLAGSPM=-link /pmtype:pm
 RM=rm.exe
 
 BIN0=hello.exe
@@ -19,10 +20,10 @@ $(BIN0): $(SRC0)
 	$(CC) $(CFLAGS) $(COPT) $(SRC0) $(LFLAGS)
 
 $(BIN1): $(SRC1)
-	$(CC) $(CFLAGS) $(COPT) $(SRC1) $(LFLAGS)
+	$(CC) $(CFLAGS) $(COPT) $(SRC1) $(LFLAGSPM)
 
 $(BIN2): $(SRC2)
-	$(CC) $(CFLAGS) $(COPT) $(SRC2) $(LFLAGS)
+	$(CC) $(CFLAGS) $(COPT) $(SRC2) $(LFLAGSPM)
 
 clean:
 	$(RM) $(BIN0)
