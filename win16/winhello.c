@@ -108,7 +108,7 @@ static void AppInit(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 
         if (RegisterClass(&app.wc) == 0)
         {
-            WindowError("RegisterClass failed.");
+            WindowError("RegisterClass() failed.");
         }
     }
 
@@ -126,7 +126,7 @@ static void AppInit(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 
     if (app.hwnd == NULL)
     {
-        WindowError("CreateWindowEx failed.");
+        WindowError("CreateWindowEx() failed.");
     }
 }
 
@@ -138,6 +138,8 @@ static int AppRun(int nCmdShow)
      *  Here we call UpdateWindow() which will send a WM_PAINT message to the event
      *  loop. Other examples leave this out so it may not be strictly necessary.
      */
+
+    /* Unlike in Win32, UpdateWindow() in Win16 does not return anything */
 
     UpdateWindow(app.hwnd);
 
@@ -160,7 +162,8 @@ static int AppRun(int nCmdShow)
 
         if (rc == -1)
         {
-            WindowError("GetMessage failed.");
+            WindowError("GetMessage() failed.");
+            return 1;
         }
         else if (rc == 0)
         {
