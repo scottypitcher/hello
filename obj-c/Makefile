@@ -1,4 +1,4 @@
-# "Hello world" in Objective C.
+# "Hello world" in Objective-C.
 #
 # Makefile for Linux.
 #
