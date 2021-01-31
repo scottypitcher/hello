@@ -161,7 +161,8 @@ static int AppRun(int nCmdShow)
 
     if (UpdateWindow(app.hwnd) == 0)
     {
-        WindowError("UpdateWindow failed.");
+        WindowError("UpdateWindow() failed.");
+        return 1;
     }
 
     /*
@@ -183,7 +184,8 @@ static int AppRun(int nCmdShow)
 
         if (rc == -1)
         {
-            WindowError("GetMessage failed.");
+            WindowError("GetMessage() failed.");
+            return 1;
         }
         else if (rc == 0)
         {
