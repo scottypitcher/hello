@@ -128,7 +128,7 @@ static void AppInit(HINSTANCE hInstance)
 
     if (RegisterClass(&app.wc) == 0)
     {
-        WindowError("RegisterClass failed.");
+        WindowError("RegisterClass() failed.");
     }
 
     app.hwnd = CreateWindowEx(
@@ -146,7 +146,7 @@ static void AppInit(HINSTANCE hInstance)
 
     if (app.hwnd == NULL)
     {
-        WindowError("CreateWindowEx failed.");
+        WindowError("CreateWindowEx() failed.");
     }
 }
 
