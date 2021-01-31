@@ -1,0 +1,26 @@
+# "Hello world" in Objective C.
+#
+# Makefile for MacOS. Tested on OS X 10.13.
+#
+# Requires Xcode.
+#
+# Note that without setting SDKROOT, ld emits the following warning:
+#
+# "ld: warning: text-based stub file CoreFoundation.tbd and library file
+# CoreFoundation are out of sync. Falling back to library file for linking."
+
+SDKROOT="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+
+CFLAGS=-W -Wall
+LFLAGS=-framework Foundation
+
+BIN=hello
+SRC=hello.m
+
+all: $(BIN)
+
+$(BIN): $(SRC)
+	 SDKROOT=$(SDKROOT) $(CC) $(CFLAGS) $(SRC) -o $(BIN) $(LFLAGS)
+
+clean:
+	rm -f $(BIN) $(BIN).d
