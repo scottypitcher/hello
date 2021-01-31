@@ -1,0 +1,30 @@
+# Makefile for Microsoft C 6.0 for OS/2
+
+CC=cl
+CFLAGS=-Lp -F 4000
+COPT=-Ox -nologo
+LFLAGS=-link /pmtype:pm
+RM=rm.exe
+
+BIN0=hello.exe
+SRC0=hello.c
+BIN1=msgbox.exe
+SRC1=msgbox.c
+BIN2=pmhello.exe
+SRC2=pmhello.c
+
+all: $(BIN0) $(BIN1) $(BIN2)
+
+$(BIN0): $(SRC0)
+	$(CC) $(CFLAGS) $(COPT) $(SRC0) $(LFLAGS)
+
+$(BIN1): $(SRC1)
+	$(CC) $(CFLAGS) $(COPT) $(SRC1) $(LFLAGS)
+
+$(BIN2): $(SRC2)
+	$(CC) $(CFLAGS) $(COPT) $(SRC2) $(LFLAGS)
+
+clean:
+	$(RM) $(BIN0)
+	$(RM) $(BIN1)
+	$(RM) $(BIN2)

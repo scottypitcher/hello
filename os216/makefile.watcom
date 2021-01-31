@@ -1,0 +1,37 @@
+# Makefile for Watcom C 16-bit OS/2
+
+CC=wcl
+COPT=-zq -ox
+CFLAGS=-bt=os2
+CFLAGSPM=-bt=os2_pm
+LFLAGS=-l=os2
+LFLAGSPM=-l=os2_pm
+
+!ifdef __UNIX__
+RM=rm -f
+!else
+RM=del
+!endif
+
+BIN0=hello.exe
+SRC0=hello.c
+BIN1=msgbox.exe
+SRC1=msgbox.c
+BIN2=pmhello.exe
+SRC2=pmhello.c
+
+all: $(BIN0) $(BIN1) $(BIN2)
+
+$(BIN0): $(SRC0)
+	$(CC) $(CFLAGS) $(COPT) $(SRC0) $(LFLAGS)
+
+$(BIN1): $(SRC1)
+	$(CC) $(CFLAGS) $(COPT) $(SRC1) $(LFLAGSPM)
+
+$(BIN2): $(SRC2)
+	$(CC) $(CFLAGS) $(COPT) $(SRC2) $(LFLAGSPM)
+
+clean:
+	$(RM) $(BIN0)
+	$(RM) $(BIN1)
+	$(RM) $(BIN2)
