@@ -1,4 +1,4 @@
-// "Hello world" for Objective C
+// "Hello world" in Objective-C
 
 #import <Foundation/Foundation.h>
 
