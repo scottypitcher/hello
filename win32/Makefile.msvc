@@ -1,0 +1,36 @@
+# Makefile for Microsoft Visual C++
+
+BIN0=hello.exe
+SRC0=hello.c
+
+BIN1=winhello.exe
+SRC1=winhello.c
+
+BIN2=msgbox.exe
+SRC2=msgbox.c
+
+CC=cl
+COPT=-nologo -W3 -Ox -MD
+LIBS=user32.lib gdi32.lib
+LFLAGS=/subsystem:windows
+
+# You can reduce the .EXE size with /align:16, though it then may not run on
+# some versions of Windows.
+
+LOPTS=/align:16
+
+all: $(BIN0) $(BIN1) $(BIN2)
+
+$(BIN0): $(SRC0)
+	$(CC) $(COPT) $(SRC0) -link $(LOPTS)
+
+$(BIN1): $(SRC1)
+	$(CC) $(COPT) $(SRC1) $(LIBS) -link $(LFLAGS) $(LOPTS)
+
+$(BIN2): $(SRC2)
+	$(CC) $(COPT) $(SRC2) $(LIBS) -link $(LFLAGS) $(LOPTS)
+
+clean:
+	del $(BIN0)
+	del $(BIN1)
+	del $(BIN2)
