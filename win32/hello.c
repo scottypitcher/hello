@@ -19,8 +19,8 @@ static char msg[] = "Hello world.\n";
 
 int main(void)
 {
-	HANDLE hnd;
-	hnd = GetStdHandle(STD_OUTPUT_HANDLE);
-	WriteFile(hnd, msg, sizeof msg - 1, NULL, 0);
-	return 0;
+    HANDLE hnd;
+    hnd = GetStdHandle(STD_OUTPUT_HANDLE);
+    WriteFile(hnd, msg, sizeof msg - 1, NULL, 0);
+    return 0;
 }
