@@ -1,3 +1,7 @@
+//
+//  "Hello world" in C++.
+//
+
 #include <iostream>
 
 int main()
