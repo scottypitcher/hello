@@ -2,7 +2,7 @@
 
 CC=hc
 COPT=-O2
-CFLAGSPM-Hpm
+CFLAGSPM=-Hpm
 RM=del
 
 BIN0=hello.exe
