@@ -1,0 +1,30 @@
+# Makefile for Watcom C
+
+CC=wcl
+COPT=-zq -ox
+CFLAGS=-bt=windows
+LFLAGS=-l=windows
+
+!ifdef __UNIX__
+RM=rm -f
+!else
+RM=del
+!endif
+
+BIN1=msgbox.exe
+SRC1=msgbox.c
+
+BIN2=winhello.exe
+SRC2=winhello.c
+
+all: $(BIN1) $(BIN2)
+
+$(BIN1): $(SRC1)
+	$(CC) $(CFLAGS) $(COPT) $(LFLAGS) $(SRC1)
+
+$(BIN2): $(SRC2)
+	$(CC) $(CFLAGS) $(COPT) $(LFLAGS) $(SRC2)
+
+clean:
+	$(RM) $(BIN1)
+	$(RM) $(BIN2)
