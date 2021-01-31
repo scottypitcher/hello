@@ -11,7 +11,7 @@ static char msg[] = "Hello world.\n";
 
 int main(void)
 {
-#ifdef __386__
+#if defined(__386__) || defined(i386)
     ULONG written;
 #else
     USHORT written;

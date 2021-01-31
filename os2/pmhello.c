@@ -45,7 +45,7 @@ static void WindowDestroy(HWND hwnd)
     WinPostMsg(hwnd, WM_QUIT, 0, 0);
 }
 
-#ifdef __386__
+#if defined(__386__) || defined(i386)
 MRESULT EXPENTRY WndProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
 #else
 MRESULT EXPENTRY WndProc(HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
