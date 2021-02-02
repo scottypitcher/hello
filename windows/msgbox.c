@@ -10,10 +10,16 @@
 
 #include <windows.h>
 
+#if defined(__386__) || defined(i386)
+#ifndef _WIN32
+#define _WIN32 1
+#endif
+#endif
+
 static char *text = "Hello world.";
 static char *title = "Hello!";
 
-#if defined(__386__) || defined(i386)
+#ifdef _WIN32
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 #else
 int PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
