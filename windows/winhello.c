@@ -1,5 +1,5 @@
 /*
- *  "Hello world" in C using the 32-bit Windows API.
+ *  "Hello world" in C using the Windows API.
  *
  *  This is a GUI app that executes a message loop, called from WinMain().
  *
@@ -11,10 +11,7 @@
  *  https://bell0bytes.eu/hello-world/
  *  http://www.charlespetzold.com/blog/2014/12/The-Infamous-Windows-Hello-World-Program.html
  *
- *  This example app should compile with any Win32 or Win64 C compiler,
- *  beginning with Microsoft Visual C++ 1.0 from 1993.
- *
- *  ------------------------------------------------------------------------------------------
+ *  ---
  *
  *  Many sample "Hello world" programs for the Win32 API fail to check
  *  return codes for errors when calling the main API functions. This app
@@ -30,6 +27,7 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
+#include <stdlib.h>
 #include <string.h>
 
 #if NORTON_COLOR
@@ -52,6 +50,15 @@ static struct
     MSG msg;
 }
 app;
+
+#if !defined(__386__) && !defined(i386)
+
+void PASCAL ExitProcess(UINT uExitCode)
+{
+    exit(uExitCode);
+}
+
+#endif
 
 static void WindowError(char *error)
 {
@@ -96,9 +103,13 @@ static void WindowPaint(HWND hwnd)
     EndPaint(hwnd, &ps);
 }
 
-static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+#if defined(__386__) || defined(i386)
+static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+#else
+static LONG FAR PASCAL WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LONG lParam)
+#endif
 {
-    switch (uMsg)
+    switch (msg)
     {
     case WM_DESTROY:        /* user clicked window close box, or pressed Alt+F4 */
     case WM_LBUTTONDOWN:    /* user clicked left mouse button */
@@ -112,27 +123,44 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
     /* switch fell through, so the default no-op function is called */
 
-    return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-static void AppInit(HINSTANCE hInstance)
+static void AppInit(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 {
-    /* set up some sane defaults */
+#if defined(__386__) && defined(i386)
+    /* in WIN32, hPrevInstance is deprecated */
+    /* set it to 0 here to ensure RegisterClass() is called */
+    hPrevInstance = 0;
+#endif
 
-    app.wc.lpfnWndProc   = WindowProc;
-    app.wc.hInstance     = hInstance;
-    app.wc.hIcon         = LoadIcon(NULL, IDI_APPLICATION);
-    app.wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
-    app.wc.hbrBackground = CreateSolidBrush(BG_COLOR);
-    app.wc.lpszClassName = CLASS_NAME;
-
-    if (RegisterClass(&app.wc) == 0)
+    if (!hPrevInstance)
     {
-        WindowError("RegisterClass() failed.");
+        /* set up some sane defaults */
+
+#if !defined(__386__) && !defined(i386)
+        app.wc.style         = CS_HREDRAW | CS_VREDRAW;
+#endif
+
+        app.wc.lpfnWndProc   = WindowProc;
+        app.wc.hInstance     = hInstance;
+        app.wc.hIcon         = LoadIcon(NULL, IDI_APPLICATION);
+        app.wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
+        app.wc.hbrBackground = CreateSolidBrush(BG_COLOR);
+        app.wc.lpszClassName = CLASS_NAME;
+
+        if (RegisterClass(&app.wc) == 0)
+        {
+            WindowError("RegisterClass() failed.");
+        }
     }
 
+#if defined(__386__) || defined(i386)
     app.hwnd = CreateWindowEx(
         0,                              /* optional window styles */
+#else
+    app.hwnd = CreateWindow(
+#endif
         CLASS_NAME,                     /* window class */
         "Hello, world!",                /* window title text */
         WS_OVERLAPPEDWINDOW,            /* window style */
@@ -159,11 +187,17 @@ static int AppRun(int nCmdShow)
      *  loop. Other examples leave this out so it may not be strictly necessary.
      */
 
+#if defined(__386__) || defined(i386)
     if (UpdateWindow(app.hwnd) == 0)
     {
         WindowError("UpdateWindow() failed.");
         return 1;
     }
+#else
+    /* WIN16 UpdateWindow() does not return a value */
+
+    UpdateWindow(app.hwnd);
+#endif
 
     /*
      *  Below is the main Windows event loop, common to every Windows GUI app.
@@ -197,8 +231,12 @@ static int AppRun(int nCmdShow)
     }
 }
 
+#if defined(__386__) || defined(i386)
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
+#else
+int PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
+#endif
 {
-    AppInit(hInst);
+    AppInit(hInst, hPrevInst);
     return AppRun(nCmdShow);
 }
