@@ -10,11 +10,7 @@
 
 #include <windows.h>
 
-#if defined(__386__) || defined(i386)
-#ifndef _WIN32
-#define _WIN32 1
-#endif
-#endif
+#include "_win32.h"
 
 static char *text = "Hello world.";
 static char *title = "Hello!";

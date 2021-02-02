@@ -30,11 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if defined(__386__) || defined(i386)
-#ifndef _WIN32
-#define _WIN32 1
-#endif
-#endif
+#include "_win32.h"
 
 #if NORTON_COLOR
 /* throwback to Norton Utilities colour scheme */
