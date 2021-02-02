@@ -7,11 +7,7 @@
 #define INCL_DOSPROCESS
 #include <os2.h>
 
-#if defined(__386__) || defined(i386)
-#ifndef _OS2V2
-#define _OS2V2 1
-#endif
-#endif
+#include "_os2v2.h"
 
 static char msg[] = "Hello world.\n";
 
