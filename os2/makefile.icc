@@ -1,0 +1,31 @@
+# Makefile for IBM C Set++ for OS/2
+#
+# Use "nmake -f makefile.icc"
+
+CC=icc
+COPT=-O+
+CFLAGSPM=-B"/pmtype:pm"
+RM=del
+
+BIN0=hello.exe
+SRC0=hello.c
+BIN1=msgbox.exe
+SRC1=msgbox.c
+BIN2=pmhello.exe
+SRC2=pmhello.c
+
+all: $(BIN0) $(BIN1) $(BIN2)
+
+$(BIN0): $(SRC0)
+	$(CC) $(CFLAGS) $(COPT) $(SRC0)
+
+$(BIN1): $(SRC1)
+	$(CC) $(CFLAGS) $(COPT) $(SRC1) $(CFLAGSPM)
+
+$(BIN2): $(SRC2)
+	$(CC) $(CFLAGS) $(COPT) $(SRC2) $(CFLAGSPM)
+
+clean:
+	$(RM) $(BIN0)
+	$(RM) $(BIN1)
+	$(RM) $(BIN2)
