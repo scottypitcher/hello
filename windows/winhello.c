@@ -30,6 +30,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(__386__) || defined(i386)
+#ifndef _WIN32
+#define _WIN32 1
+#endif
+#endif
+
 #if NORTON_COLOR
 /* throwback to Norton Utilities colour scheme */
 #define BG_COLOR RGB(0x55, 0x55, 0xFF)
@@ -51,7 +57,7 @@ static struct
 }
 app;
 
-#if !defined(__386__) && !defined(i386)
+#ifndef _WIN32
 
 void PASCAL ExitProcess(UINT uExitCode)
 {
@@ -103,7 +109,7 @@ static void WindowPaint(HWND hwnd)
     EndPaint(hwnd, &ps);
 }
 
-#if defined(__386__) || defined(i386)
+#ifdef _WIN32
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 #else
 static LONG FAR PASCAL WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LONG lParam)
@@ -128,7 +134,7 @@ static LONG FAR PASCAL WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LONG lPara
 
 static void AppInit(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 {
-#if defined(__386__) && defined(i386)
+#ifdef _WIN32
     /* in WIN32, hPrevInstance is deprecated */
     /* set it to 0 here to ensure RegisterClass() is called */
     hPrevInstance = 0;
@@ -138,7 +144,7 @@ static void AppInit(HINSTANCE hInstance, HINSTANCE hPrevInstance)
     {
         /* set up some sane defaults */
 
-#if !defined(__386__) && !defined(i386)
+#ifndef _WIN32
         app.wc.style         = CS_HREDRAW | CS_VREDRAW;
 #endif
 
@@ -155,7 +161,7 @@ static void AppInit(HINSTANCE hInstance, HINSTANCE hPrevInstance)
         }
     }
 
-#if defined(__386__) || defined(i386)
+#ifdef _WIN32
     app.hwnd = CreateWindowEx(
         0,                              /* optional window styles */
 #else
@@ -187,7 +193,7 @@ static int AppRun(int nCmdShow)
      *  loop. Other examples leave this out so it may not be strictly necessary.
      */
 
-#if defined(__386__) || defined(i386)
+#ifdef _WIN32
     if (UpdateWindow(app.hwnd) == 0)
     {
         WindowError("UpdateWindow() failed.");
@@ -231,7 +237,7 @@ static int AppRun(int nCmdShow)
     }
 }
 
-#if defined(__386__) || defined(i386)
+#ifdef _WIN32
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 #else
 int PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
