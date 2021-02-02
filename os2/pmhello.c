@@ -8,6 +8,12 @@
 #define INCL_DOSPROCESS
 #include <os2.h>
 
+#if defined(__386__) || defined(i386)
+#ifndef _OS2V2
+#define _OS2V2 1
+#endif
+#endif
+
 #define TEXT_MARGIN 5
 
 static char *CLASS_NAME = "PMHello";
@@ -49,7 +55,7 @@ static void WindowDestroy(HWND hwnd)
     WinPostMsg(hwnd, WM_QUIT, 0, 0);
 }
 
-#if defined(__386__) || defined(i386)
+#ifdef _OS2V2
 MRESULT EXPENTRY WndProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
 #else
 MRESULT EXPENTRY WndProc(HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
