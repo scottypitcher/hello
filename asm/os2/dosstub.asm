@@ -1,47 +1,26 @@
 ;
-;  DOS stub for OS/2 executables.
+;  TODO header
 ;
-;  Displays "This program cannot be run in a DOS session." and exits.
-;
-;  Requires the Flat Assembler (FASM) from https://flatassembler.net/
-;
-;  Build DOSSTUB.EXE with:
-;
-;  fasm dosstub.asm dosstub.exe
 
-format MZ
-entry main:_start
-stack 100h
+.model small
+.stack 256
+.code
 
-define DOSWRITETOSTDOUT 0x09
-define DOSEXIT          0x4C
+; TODO consts
 
-segment extra
-
-macro DosWriteToStdOut string
-{
-    mov ax, text
-    mov ds, ax
-
-    mov ah, DOSWRITETOSTDOUT
-    mov dx, string
-    int 21h
-}
-
-macro DosExit retval
-{
-    mov ah, DOSEXIT
-    mov al, retval
-    int 21h
-}
-
-segment main
+; TODO func macros
 
 _start:
-    DosWriteToStdOut msg
-    DosExit 0
+    mov ax, @data
+    mov ds, ax
+    lea dx, msg
+    mov ah, 09h
+    int 21h
 
-segment text
+    mov ax, 4C00h
+    int 21h
 
-msg:
-    db "This program cannot be run in a DOS session.", 0x0D, 0x0D, 0x0A, "$"
+.data
+    msg byte "This program cannot be run in a DOS session.", 0Dh, 0Dh, 0Ah, "$"
+
+end _start
