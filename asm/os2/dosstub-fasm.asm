@@ -7,7 +7,7 @@
 ;
 ;  Build DOSSTUB.EXE with:
 ;
-;  fasm dosstub.asm dosstub.exe
+;  fasm dosstub-fasm.asm dosstub.exe
 
 format MZ
 entry main:_start
