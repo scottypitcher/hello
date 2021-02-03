@@ -14,6 +14,10 @@
 ;  Add "/align:16" to the LINK command above to shrink HELLO32.EXE
 ;  from 3072 bytes down to 784.
 ;
+;  A free alternative to Microsoft LINK is GoLink from http://www.godevtool.com/.
+;
+;  golink /files /console /entry _start hello32.obj kernel32.dll
+;
 
 section .data
 
