@@ -1,0 +1,4 @@
+NAME hello windowapi
+STUB 'dosstub.exe'
+DESCRIPTION 'hello'
+STACKSIZE 16384
