@@ -21,8 +21,6 @@
 
 section .data
 
-STD_OUTPUT_HANDLE equ -11
-
 msg:
     db 'Hello world.', 0x0A
     .len: equ $-msg
@@ -35,26 +33,39 @@ extern  _ExitProcess@4
 
 section .text
 
+%macro GetStdHandle 1
+    ; HANDLE WINAPI GetStdHandle(nStdHandle)
+    push %1                       ; nStdHandle
+    call _GetStdHandle@4          ; GetStdHandle()
+%endmacro
+
+%macro WriteFile 5
+    ; BOOL WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, lpOverlapped)
+    ; Note: Parameters are pushed in reverse order.
+    push %5                       ; lpOverlapped
+    push %4                       ; lpNumberOfBytesWritten (set to NULL)
+    push %3                       ; nNumberOfBytesToWrite
+    push %2                       ; lpBuffer
+    push %1                       ; hFile; EAX still has the result from GetStdHandle()
+    call _WriteFile@20            ; WriteFile()
+%endmacro
+
+%macro ExitProcess 1
+    ; VOID ExitProcess(uExitCode)
+    push %1                       ; uExitCode
+    call _ExitProcess@4           ; ExitProcess()
+%endmacro
+
+STD_OUTPUT_HANDLE equ -11
+
 _start:
     ; establish a new stack frame
     mov ebp, esp
     sub esp, 4
 
-    ; HANDLE WINAPI GetStdHandle(nStdHandle)
-    push STD_OUTPUT_HANDLE        ; nStdHandle
-    call _GetStdHandle@4          ; GetStdHandle()
+    GetStdHandle STD_OUTPUT_HANDLE
 
     ; the return value of GetStdHandle() is in EAX
 
-    ; BOOL WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, lpOverlapped)
-    ; Note: Parameters are pushed in reverse order.
-    push 0                        ; lpOverlapped
-    push 0                        ; lpNumberOfBytesWritten (set to NULL)
-    push msg.len                  ; nNumberOfBytesToWrite
-    push msg                      ; lpBuffer
-    push eax                      ; hFile; EAX still has the result from GetStdHandle()
-    call _WriteFile@20            ; WriteFile()
-
-    ; VOID ExitProcess(uExitCode)
-    push 0                        ; uExitCode
-    call _ExitProcess@4           ; ExitProcess()
+    WriteFile eax, msg, msg.len, 0, 0
+    ExitProcess 0
