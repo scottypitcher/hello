@@ -1,21 +1,27 @@
 NASM=nasm
 
-ARMAS=arm-linux-gnueabi-as
-ARMLD=arm-linux-gnueabi-ld
+ARM_AS=arm-linux-gnueabi-as
+ARM_LD=arm-linux-gnueabi-ld
+
+MIPS_AS=mips-linux-gnu-as
+MIPS_LD=mips-linux-gnu-ld
 
 BIN1=hellox86
 BIN2=hellox64
 BIN3=helloarm
+BIN4=hellomips
 
 OBJ1=hellox86.o
 OBJ2=hellox64.o
 OBJ3=helloarm.o
+OBJ4=hellomips.o
 
 SRC1=hellox86.asm
 SRC2=hellox64.asm
 SRC3=helloarm.asm
+SRC4=hellomips.asm
 
-all: $(BIN1) $(BIN2) $(BIN3)
+all: $(BIN1) $(BIN2) $(BIN3) $(BIN4)
 
 $(OBJ1): $(SRC1)
 	$(NASM) -f elf $(SRC1)
@@ -30,10 +36,16 @@ $(BIN2): $(OBJ2)
 	$(LD) -s -m elf_x86_64 -o $(BIN2) $(OBJ2)
 
 $(OBJ3): $(SRC3)
-	$(ARMAS) -o $(OBJ3) $(SRC3)
+	$(ARM_AS) -o $(OBJ3) $(SRC3)
 
 $(BIN3): $(OBJ3)
-	$(ARMLD) -s -o $(BIN3) $(OBJ3)
+	$(ARM_LD) -s -o $(BIN3) $(OBJ3)
+
+$(OBJ4): $(SRC4)
+	$(MIPS_AS) -o $(OBJ4) $(SRC4)
+
+$(BIN4): $(OBJ4)
+	$(MIPS_LD) -s -o $(BIN4) $(OBJ4)
 
 clean:
-	rm -f $(OBJ1) $(OBJ2) $(OBJ3) $(BIN1) $(BIN2) $(BIN3)
+	rm -f $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(BIN1) $(BIN2) $(BIN3) $(BIN4)
