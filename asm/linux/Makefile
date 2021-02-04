@@ -6,22 +6,28 @@ ARM_LD=arm-linux-gnueabi-ld
 MIPS_AS=mips-linux-gnu-as
 MIPS_LD=mips-linux-gnu-ld
 
+PPC_AS=powerpc-linux-gnu-as
+PPC_LD=powerpc-linux-gnu-ld
+
 BIN1=hellox86
 BIN2=hellox64
 BIN3=helloarm
 BIN4=hellomips
+BIN5=helloppc
 
 OBJ1=hellox86.o
 OBJ2=hellox64.o
 OBJ3=helloarm.o
 OBJ4=hellomips.o
+OBJ5=helloppc.o
 
 SRC1=hellox86.asm
 SRC2=hellox64.asm
 SRC3=helloarm.asm
 SRC4=hellomips.asm
+SRC5=helloppc.asm
 
-all: $(BIN1) $(BIN2) $(BIN3) $(BIN4)
+all: $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5)
 
 $(OBJ1): $(SRC1)
 	$(NASM) -f elf $(SRC1)
@@ -47,5 +53,12 @@ $(OBJ4): $(SRC4)
 $(BIN4): $(OBJ4)
 	$(MIPS_LD) -s -o $(BIN4) $(OBJ4)
 
+$(OBJ5): $(SRC5)
+	$(PPC_AS) -o $(OBJ5) $(SRC5)
+
+$(BIN5): $(OBJ5)
+	$(PPC_LD) -s -o $(BIN5) $(OBJ5)
+
 clean:
-	rm -f $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(BIN1) $(BIN2) $(BIN3) $(BIN4)
+	rm -f $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5)
+	rm -f $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5)
