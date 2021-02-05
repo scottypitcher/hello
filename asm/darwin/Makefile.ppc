@@ -1,0 +1,14 @@
+BIN1=helloppc
+OBJ1=helloppc.o
+SRC1=helloppc.asm
+
+all: $(BIN1)
+
+$(OBJ1): $(SRC1)
+	$(AS) -arch ppc -o $(OBJ1) $(SRC1)
+
+$(BIN1): $(OBJ1)
+	$(LD) -o $(BIN1) $(OBJ1)
+
+clean:
+	rm -f $(BIN1) $(OBJ1)
