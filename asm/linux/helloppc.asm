@@ -29,14 +29,14 @@ msg:
 
 _start:
     # write(stdout, msg, msglen)
-    li 5, msglen
+    li 0, SYS_WRITE
+    li 3, stdout
     lis 4, msg@ha      # load top 16 bits of output string
     addi 4, 4, msg@l   # load bottom 16 bits of output string
-    li 3, stdout
-    li 0, SYS_WRITE
+    li 5, msglen
     sc                 # syscall
 
     # exit(0)
-    li 3, 0
     li 0, SYS_EXIT
+    li 3, 0
     sc
