@@ -27,12 +27,8 @@ _start:
     invoke ExitProcess, 0
 
 section '.idata' import data readable writeable
-    library kernel, 'KERNEL32.DLL'
-
-    import kernel, \
-      WriteFile, 'WriteFile', \
-      GetStdHandle, 'GetStdHandle', \
-      ExitProcess, 'ExitProcess'
+    library kernel32, 'KERNEL32.DLL'
+    include 'api/kernel32.inc'
 
 section '.data' data readable writeable
     msg db "Hello world.", 0Dh, 0Ah
