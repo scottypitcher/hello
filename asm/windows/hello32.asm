@@ -27,9 +27,9 @@ msg:
 
 global _start
 
-extern  _GetStdHandle@4
-extern  _WriteFile@20
-extern  _ExitProcess@4
+extern _GetStdHandle@4
+extern _WriteFile@20
+extern _ExitProcess@4
 
 section .text
 
@@ -43,10 +43,10 @@ section .text
     ; BOOL WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, lpOverlapped)
     ; Note: Parameters are pushed in reverse order.
     push %5                       ; lpOverlapped
-    push %4                       ; lpNumberOfBytesWritten (set to NULL)
+    push %4                       ; lpNumberOfBytesWritten
     push %3                       ; nNumberOfBytesToWrite
     push %2                       ; lpBuffer
-    push %1                       ; hFile; EAX still has the result from GetStdHandle()
+    push %1                       ; hFile
     call _WriteFile@20            ; WriteFile()
 %endmacro
 
