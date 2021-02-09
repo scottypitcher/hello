@@ -20,7 +20,7 @@ SRC4=hellox64-fasm.asm
 all: $(BIN1) $(BIN2) $(BIN3) $(BIN4)
 
 $(BIN1): $(OBJ1)
-	$(LINK) /subsystem:console /nodefaultlib /entry:start $(OBJ1) kernel32.lib
+	$(LINK) /subsystem:console /nodefaultlib /entry:_start $(OBJ1) kernel32.lib
 
 $(OBJ1): $(SRC1)
 	$(NASM) -fwin32 $(SRC1)
@@ -29,7 +29,7 @@ $(BIN2): $(SRC2)
 	$(FASM) $(SRC2) $(BIN2)
 
 $(BIN3): $(OBJ3)
-	$(LINK) /subsystem:console /nodefaultlib /entry:start $(OBJ3) kernel32.lib
+	$(LINK) /subsystem:console /nodefaultlib /entry:_start $(OBJ3) kernel32.lib
 
 $(OBJ3): $(SRC3)
 	$(NASM) -fwin64 $(SRC3)
