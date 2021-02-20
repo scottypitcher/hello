@@ -4,8 +4,12 @@
  *  This is a Presentation Manager GUI app that executes a message loop.
  */
 
+#include <string.h>
+
+#define INCL_PM
 #define INCL_WIN
 #define INCL_DOSPROCESS
+
 #include <os2.h>
 
 #include "_os2v2.h"
@@ -24,24 +28,44 @@ static struct
 }
 app;
 
+#define MAKERGB(r, g, b) MAKEULONG (MAKEUSHORT((b), (g)), (r))
+
 static void WindowPaint(HWND hwnd)
 {
-    RECTL r;
+    RECTL rect;
     HPS hps;
+    int rgb = MAKERGB(0x18, 0x25, 0x33);
+    int color;
+
     char text[] = "Hello world.";
     char text2[] = "Click anywhere inside the window to close it.";
+    char font[] = "10.Helv";
 
     hps = WinBeginPaint(hwnd, 0, NULL);
-    WinQueryWindowRect(hwnd, &r);
-    WinFillRect(hps, &r, CLR_DARKBLUE);
-    r.xLeft += TEXT_MARGIN;
-    r.yTop -= TEXT_MARGIN;
+    WinQueryWindowRect(hwnd, &rect);
 
-    WinDrawText(WinGetPS(hwnd), -1, text, &r, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
+    GpiCreateLogColorTable(hps, LCOL_PURECOLOR, LCOLF_RGB, 0, 0, NULL);
 
-    r.yTop -= 60;
+    rgb &= 0xffffff;
+    color = GpiQueryNearestColor(hps, 0, rgb);
 
-    WinDrawText(WinGetPS(hwnd), -1, text2, &r, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
+    if (color == GPI_ALTERROR)
+    {
+        color = rgb;
+    }
+
+    WinFillRect(hps, &rect, color);
+
+    WinSetPresParam(hwnd, PP_FONTNAMESIZE, strlen(font) + 1, font);
+
+    rect.xLeft += TEXT_MARGIN;
+    rect.yTop -= TEXT_MARGIN;
+
+    WinDrawText(WinGetPS(hwnd), -1, text, &rect, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
+
+    rect.yTop -= 60;
+
+    WinDrawText(WinGetPS(hwnd), -1, text2, &rect, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
 
     WinEndPaint(hwnd);
 }
