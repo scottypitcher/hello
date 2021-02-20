@@ -35,8 +35,12 @@ written dw 0
 
 .code
 
+STDIN_FILENO = 0
+STDOUT_FILENO = 1
+STDERR_FILENO = 2
+
 _start:
-    invoke DosWrite, 1, NEAR32 PTR msg, LENGTHOF msg, NEAR32 PTR written
+    invoke DosWrite, STDOUT_FILENO, NEAR32 PTR msg, LENGTHOF msg, NEAR32 PTR written
     invoke DosExit, 0, 0
 
 end _start
