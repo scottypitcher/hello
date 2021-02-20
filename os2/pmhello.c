@@ -34,7 +34,7 @@ static void WindowPaint(HWND hwnd)
 {
     RECTL rect;
     HPS hps;
-    int rgb = MAKERGB(0x18, 0x25, 0x33);
+    long rgb = MAKERGB(0x18, 0x25, 0x33);
     int color;
 
     char text[] = "Hello world.";
