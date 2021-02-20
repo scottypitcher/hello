@@ -1,16 +1,19 @@
 ;
-; "Hello world" for 16-bit OS/2 in 80286 assembly.
+;  "Hello world" for 16-bit OS/2 in 80286 assembly.
 ;
-; via https://jeffpar.github.io/kbarchive/kb/072/Q72698/
+;  Via https://jeffpar.github.io/kbarchive/kb/072/Q72698/
 ;
-; Tested with Microsoft MASM 6.00B.
+;  Tested with Microsoft MASM 6.00B.
 ;
-; Build HELLO16.EXE with:
+;  Build HELLO16.EXE with:
 ;
-; ml hello16.asm
+;  set INCLUDE=c:\masm\include
+;  set LIB=c:\masm\lib
+;  ml hello16.asm hello.def
+;
 
 includelib os2.lib
-include c:\masm\include\os2.inc
+include os2.inc
 
 dgroup group _data
 
@@ -26,8 +29,12 @@ _data ends
 _text segment word public 'CODE'
     assume cs:_text, ds:_data, ss:stack
 
+STDIN_FILENO = 0
+STDOUT_FILENO = 1
+STDERR_FILENO = 2
+
 _start:
-    invoke DosWrite, 1, addr msg, lengthof msg, addr written
+    invoke DosWrite, STDOUT_FILENO, addr msg, lengthof msg, addr written
     invoke DosExit, 1, 0
 
 _text ends

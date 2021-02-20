@@ -1,7 +1,6 @@
 ML=ml
 LINK=link
 LINK386=link386
-LOPT=/align:16
 RM=del
 
 DEF=hello.def
@@ -30,13 +29,13 @@ $(OBJ1): $(SRC1)
 	$(ML) -c $(SRC1)
 
 $(BIN1): $(BIN0) $(OBJ1)
-	$(LINK) $(LOPT) $(OBJ1),, nul,, $(DEF)
+	$(LINK) $(OBJ1),, nul,, $(DEF)
 
 $(OBJ2): $(SRC2)
 	$(ML) -c $(SRC2)
 
 $(BIN2): $(BIN1) $(OBJ2)
-	$(LINK386) $(LOPT) $(OBJ2),, nul,, $(DEF)
+	$(LINK386) $(OBJ2),, nul,, $(DEF)
 
 clean:
 	$(RM) $(BIN0)

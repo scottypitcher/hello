@@ -1,4 +1,4 @@
-NAME hello windowapi
+NAME hello windowcompat
 STUB 'dosstub.exe'
 DESCRIPTION 'hello'
-STACKSIZE 16384
+STACKSIZE 4096

@@ -18,25 +18,25 @@
 ; Both of these can be safely ignored.
 ;
 
+includelib os2386.lib
+
 .386
-.model flat
+.model flat, syscall
 
-DosWrite proto syscall :dword, :ptr byte, :dword, :ptr dword
-DosExit  proto syscall :dword
-
-includelib <os2386.lib>
+DosWrite PROTO NEAR32 syscall, hf:WORD, pvBuf:NEAR32, cbBuf:WORD, pcbBytesWritten:NEAR32
+DosExit PROTO NEAR32 syscall, fTerminate:WORD, ulExitCode:WORD
 
 .stack 4096
 
 .data
 
-msg db "Hello world", 0Dh, 0Ah
-written dd 0
+msg db "Hello world.", 0Dh, 0Ah
+written dw 0
 
 .code
 
 _start:
-    invoke DosWrite, 1, addr msg, sizeof msg, addr written
-    invoke DosExit, 0
+    invoke DosWrite, 1, NEAR32 PTR msg, LENGTHOF msg, NEAR32 PTR written
+    invoke DosExit, 0, 0
 
 end _start
