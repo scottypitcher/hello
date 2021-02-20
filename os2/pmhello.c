@@ -44,6 +44,13 @@ static void WindowPaint(HWND hwnd)
     hps = WinBeginPaint(hwnd, 0, NULL);
     WinQueryWindowRect(hwnd, &rect);
 
+    /*
+     *  Use an RGB colour for the window background.
+     *
+     *  Via PC Magazine January 15, 1991 edition, page 437:
+     *  https://books.google.com.au/books?id=WwMCsPuGSLEC&pg=PT442
+     */
+
     GpiCreateLogColorTable(hps, LCOL_PURECOLOR, LCOLF_RGB, 0, 0, NULL);
 
     rgb &= 0xffffff;
@@ -56,12 +63,26 @@ static void WindowPaint(HWND hwnd)
 
     WinFillRect(hps, &rect, color);
 
+    /*
+     *  Use a custom font instead of the ugly default System font.
+     *
+     *  "When using a string for the value of the presentation parameter, is
+     *  that you must add one to the length for the `\0' byte at the end."
+     *
+     *  - Larry Salomon, "Using Presentation Parameters",
+     *  http://www.edm2.com/0103/qa.html
+     */
+
     WinSetPresParam(hwnd, PP_FONTNAMESIZE, strlen(font) + 1, font);
+
+    /* give the text a 5 pixel top/left margin */
 
     rect.xLeft += TEXT_MARGIN;
     rect.yTop -= TEXT_MARGIN;
 
     WinDrawText(WinGetPS(hwnd), -1, text, &rect, CLR_WHITE, CLR_BACKGROUND, DT_LEFT | DT_TOP);
+
+    /* move down 60 pixels and display the second paragraph of text */
 
     rect.yTop -= 60;
 
