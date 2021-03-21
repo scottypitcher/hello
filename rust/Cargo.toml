@@ -1,0 +1,9 @@
+[package]
+name = "hello"
+version = "1.0.0"
+authors = ["Andrew Clarke <mail@ozzmosis.com>"]
+repository = "https://github.com/zoomosis/hello/tree/main/rust"
+
+[[bin]]
+name = "hello"
+path = "hello.rs"
