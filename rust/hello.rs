@@ -1,11 +1,16 @@
-// "Hello world" in Rust
 //
-// $Id: hello.rs 81 2018-07-10 16:47:34Z ozzmosis $
+//  "Hello world" in Rust
 //
-// Build with: rustc hello.rs
+//  Build with:
+//
+//  rustc hello.rs
+//
+//  or:
+//
+//  cargo build
+//
 
 fn main()
 {
     println!("Hello world.");
 }
-
