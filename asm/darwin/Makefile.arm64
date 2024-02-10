@@ -1,0 +1,14 @@
+AS=as
+ASOPT=-arch arm64
+
+LD=ld
+LDOPT=-arch arm64 -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path`
+
+helloarm64: helloarm64.o
+	$(LD) -o helloarm64 helloarm64.o $(LDOPT)
+
+helloarm64.o: helloarm64.asm
+	$(AS) $(ASOPT) -o helloarm64.o helloarm64.asm
+
+clean:
+	rm -f helloarm64.o helloarm64
