@@ -1,4 +1,8 @@
+ZIG=zig
 ZOPT=-O ReleaseSmall
 
 hello: hello.zig
-	zig build-exe $(ZOPT) hello.zig
+	$(ZIG) build-exe $(ZOPT) hello.zig
+
+clean:
+	rm -f hello hello.o
