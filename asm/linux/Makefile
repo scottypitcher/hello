@@ -12,12 +12,16 @@ PPC_LD=powerpc-linux-gnu-ld
 AARCH64_AS=aarch64-linux-gnu-as
 AARCH64_LD=aarch64-linux-gnu-ld
 
+RISCV64_AS=riscv64-linux-gnu-as
+RISCV64_LD=riscv64-linux-gnu-ld
+
 BIN1=hellox86
 BIN2=hellox64
 BIN3=helloarm
 BIN4=hellomips
 BIN5=helloppc
 BIN6=helloaarch64
+BIN7=helloriscv64
 
 OBJ1=hellox86.o
 OBJ2=hellox64.o
@@ -25,6 +29,7 @@ OBJ3=helloarm.o
 OBJ4=hellomips.o
 OBJ5=helloppc.o
 OBJ6=helloaarch64.o
+OBJ7=helloriscv64.o
 
 SRC1=hellox86.asm
 SRC2=hellox64.asm
@@ -32,8 +37,9 @@ SRC3=helloarm.asm
 SRC4=hellomips.asm
 SRC5=helloppc.asm
 SRC6=helloaarch64.asm
+SRC7=helloriscv64.asm
 
-all: $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5) $(BIN6)
+all: $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5) $(BIN6) $(BIN7)
 
 $(OBJ1): $(SRC1)
 	$(NASM) -f elf $(SRC1)
@@ -71,6 +77,12 @@ $(OBJ6): $(SRC6)
 $(BIN6): $(OBJ6)
 	$(AARCH64_LD) -s -o $(BIN6) $(OBJ6)
 
+$(OBJ7): $(SRC7)
+	$(RISCV64_AS) -o $(OBJ7) $(SRC7)
+
+$(BIN7): $(OBJ7)
+	$(RISCV64_LD) -s -o $(BIN7) $(OBJ7)
+
 clean:
-	rm -f $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5) $(BIN6)
-	rm -f $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6)
+	rm -f $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5) $(BIN6) $(BIN7)
+	rm -f $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(BIN7)
