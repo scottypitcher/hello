@@ -3,7 +3,7 @@
 //
 //  Build with:
 //
-//  aarch64-linux-gnu-as -o helloaarch64.o helloaarch64.s
+//  aarch64-linux-gnu-as -o helloaarch64.o helloaarch64.asm
 //  aarch64-linux-gnu-ld -o helloaarch64 helloaarch64.o -s
 //
 
