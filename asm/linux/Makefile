@@ -40,6 +40,7 @@ SRC6=helloaarch64.asm
 SRC7=helloriscv64.asm
 
 all: $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5) $(BIN6) $(BIN7)
+	file $(BIN1) $(BIN2) $(BIN3) $(BIN4) $(BIN5) $(BIN6) $(BIN7)
 
 $(OBJ1): $(SRC1)
 	$(NASM) -f elf $(SRC1)
