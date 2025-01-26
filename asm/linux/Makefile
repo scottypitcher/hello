@@ -79,7 +79,7 @@ $(BIN6): $(OBJ6)
 	$(AARCH64_LD) -s -o $(BIN6) $(OBJ6)
 
 $(OBJ7): $(SRC7)
-	$(RISCV64_AS) -o $(OBJ7) $(SRC7)
+	$(RISCV64_AS) -march=rv64imac -o $(OBJ7) $(SRC7)
 
 $(BIN7): $(OBJ7)
 	$(RISCV64_LD) -s -o $(BIN7) $(OBJ7)

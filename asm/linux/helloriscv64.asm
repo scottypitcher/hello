@@ -6,6 +6,10 @@
 #  riscv64-linux-gnu-as -o helloriscv64.o helloriscv64.asm
 #  riscv64-linux-gnu-ld -o helloriscv64 helloriscv64.o -s
 #
+#  Optional for riscv64-linux-gnu-as:
+#
+#  -march=rv64imac: Use soft-float ABI; the default is hard-float double.
+#
 
 .set SYS_WRITE, 64
 .set SYS_EXIT,  93
